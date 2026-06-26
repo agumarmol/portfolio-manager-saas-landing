@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clarity — Tu portfolio de inversiones, en claro</title>
+<meta name="description" content="Importá tus extractos de Erste y Santander y vé al instante tus posiciones, costo real, P&L y retornos (TWR/MWR). Tus datos, aislados y seguros." />
+<meta property="og:title" content="Clarity — Tu portfolio de inversiones, en claro" />
+<meta property="og:description" content="Todos tus brokers, una sola foto clara. Posiciones, costo real, P&L y retornos." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0E1F1A; --ink-2:#13312A; --paper:#FBFAF7; --paper-2:#F2EFE8;
+    --green:#1D9E75; --green-deep:#14795A; --slate:#5C6B66; --line:rgba(14,31,26,.12);
+    --gain:#1D9E75; --loss:#C2553D; --paper-line:rgba(251,250,247,.14);
+    --display:"Spectral",Georgia,serif; --body:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.08;letter-spacing:-.01em}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green-deep)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:40;background:rgba(251,250,247,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:1.18rem}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(29,158,117,.18)}
+  .nav-links{display:flex;align-items:center;gap:28px;font-size:.94rem}
+  .nav-links a.muted{color:var(--slate)}
+  .btn{display:inline-block;padding:11px 20px;border-radius:9px;font-weight:600;font-size:.94rem;transition:transform .15s ease,background .15s ease}
+  .btn-primary{background:var(--green);color:#fff}
+  .btn-primary:hover{background:var(--green-deep);transform:translateY(-1px)}
+  .btn-ghost{border:1px solid var(--line)}
+  .btn-ghost:hover{background:var(--paper-2)}
+
+  /* hero */
+  .hero{padding:84px 0 72px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .hero h1{font-size:clamp(2.5rem,5vw,3.9rem);margin:18px 0 20px}
+  .hero h1 em{font-style:italic;color:var(--green-deep)}
+  .hero p.lede{font-size:1.16rem;color:var(--slate);max-width:30ch;margin-bottom:30px}
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .note{margin-top:16px;font-size:.86rem;color:var(--slate)}
+
+  /* hero visual: statement -> clarity */
+  .panel{background:var(--ink);border-radius:18px;padding:22px;color:var(--paper);box-shadow:0 30px 60px -28px rgba(14,31,26,.5)}
+  .panel .label{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,250,247,.55);margin-bottom:12px}
+  .ledger{font-family:var(--mono);font-size:.78rem;border:1px solid var(--paper-line);border-radius:10px;overflow:hidden;margin-bottom:18px}
+  .ledger .row{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:9px 13px;border-bottom:1px solid var(--paper-line);color:rgba(251,250,247,.82)}
+  .ledger .row:last-child{border-bottom:0}
+  .ledger .row .q{color:rgba(251,250,247,.5)}
+  .arrow{text-align:center;color:var(--green);font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;margin:0 0 16px}
+  .kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px}
+  .kpi{background:var(--ink-2);border:1px solid var(--paper-line);border-radius:11px;padding:13px}
+  .kpi .k{font-size:.64rem;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(251,250,247,.55)}
+  .kpi .v{font-family:var(--mono);font-weight:600;font-size:1.16rem;margin-top:5px}
+  .kpi .v.up{color:var(--green)}
+  .kpi .v.down{color:#E58E78}
+
+  /* trust */
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper-2)}
+  .trust .wrap{display:flex;align-items:center;gap:26px;flex-wrap:wrap;padding:20px 28px}
+  .trust span.t{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate)}
+  .trust .chip{font-family:var(--mono);font-size:.84rem;color:var(--ink);padding:5px 12px;border:1px solid var(--line);border-radius:7px;background:var(--paper)}
+
+  /* sections */
+  section{padding:84px 0}
+  .sec-head{max-width:60ch;margin-bottom:46px}
+  .sec-head h2{font-size:clamp(1.9rem,3.4vw,2.6rem);margin:14px 0 12px}
+  .sec-head p{color:var(--slate);font-size:1.06rem}
+
+  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .feature{background:var(--paper);padding:34px}
+  .feature .n{font-family:var(--mono);font-size:.8rem;color:var(--green-deep)}
+  .feature h3{font-size:1.32rem;margin:14px 0 9px}
+  .feature p{color:var(--slate);font-size:.98rem}
+
+  /* steps */
+  .steps-sec{background:var(--ink);color:var(--paper)}
+  .steps-sec .eyebrow{color:var(--green)}
+  .steps-sec h2{color:var(--paper)}
+  .steps-sec .sec-head p{color:rgba(251,250,247,.66)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;counter-reset:step}
+  .step{border-top:2px solid var(--green);padding-top:18px}
+  .step .s{font-family:var(--mono);font-size:.78rem;color:var(--green);letter-spacing:.1em}
+  .step h3{color:var(--paper);font-size:1.2rem;margin:10px 0 8px}
+  .step p{color:rgba(251,250,247,.66);font-size:.96rem}
+
+  /* pricing */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .plan{border:1px solid var(--line);border-radius:16px;padding:30px;background:var(--paper);display:flex;flex-direction:column}
+  .plan.feat{border-color:var(--green);box-shadow:0 18px 40px -26px rgba(29,158,117,.55);position:relative}
+  .plan.feat::after{content:"Más elegido";position:absolute;top:-11px;right:20px;background:var(--green);color:#fff;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:6px}
+  .plan h3{font-size:1.3rem}
+  .plan .price{font-family:var(--mono);font-size:2rem;font-weight:600;margin:10px 0 4px}
+  .plan .price small{font-size:.9rem;color:var(--slate);font-weight:400}
+  .plan ul{list-style:none;margin:20px 0 26px;display:flex;flex-direction:column;gap:11px}
+  .plan li{padding-left:26px;position:relative;color:var(--slate);font-size:.95rem}
+  .plan li::before{content:"";position:absolute;left:0;top:.55em;width:13px;height:7px;border-left:2px solid var(--green);border-bottom:2px solid var(--green);transform:rotate(-45deg)}
+  .plan .btn{margin-top:auto;text-align:center}
+
+  /* final cta */
+  .final{text-align:center;background:var(--paper-2);border-top:1px solid var(--line)}
+  .final h2{font-size:clamp(2rem,4vw,3rem);max-width:18ch;margin:0 auto 18px}
+  .final p{color:var(--slate);max-width:46ch;margin:0 auto 28px;font-size:1.08rem}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--slate);font-size:.88rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr;gap:40px;padding:54px 0}
+    .features,.steps,.plans{grid-template-columns:1fr}
+    .nav-links a.muted{display:none}
+    .hero p.lede{max-width:none}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.in{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#"><span class="dot"></span>Clarity</a>
+    <div class="nav-links">
+      <a class="muted" href="#features">Funciones</a>
+      <a class="muted" href="#how">Cómo funciona</a>
+      <a class="muted" href="#pricing">Planes</a>
+      <a class="btn btn-primary" href="APP_URL">Empezar gratis</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div>
+    <span class="eyebrow">Para quien invierte en varios brokers</span>
+    <h1>Todos tus brokers, <em>una sola foto clara.</em></h1>
+    <p class="lede">Importá tus extractos de Erste y Santander y entendé de verdad qué tenés, cuánto te costó y cuánto rindió.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="APP_URL">Crear cuenta gratis</a>
+      <a class="btn btn-ghost" href="#how">Ver cómo funciona</a>
+    </div>
+    <p class="note">Sin tarjeta. Tu plan gratuito incluye un portfolio y hasta 100 operaciones.</p>
+  </div>
+
+  <div class="panel reveal" aria-hidden="true">
+    <div class="label">Extracto del broker</div>
+    <div class="ledger">
+      <div class="row"><span>COMPRA · Silber ETC</span><span class="q">325</span><span>90,64</span></div>
+      <div class="row"><span>VENTA · Silber ETC</span><span class="q">630</span><span>92,36</span></div>
+      <div class="row"><span>COMPRA · Fair Invest</span><span class="q">112</span><span>104,43</span></div>
+    </div>
+    <div class="arrow">↓ &nbsp; en claro &nbsp; ↓</div>
+    <div class="kpis">
+      <div class="kpi"><div class="k">Valor</div><div class="v">60.034</div></div>
+      <div class="kpi"><div class="k">No realizado</div><div class="v down">−2.608</div></div>
+      <div class="kpi"><div class="k">TWR</div><div class="v down">−15,6%</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="trust">
+  <div class="wrap">
+    <span class="t">Lee tus extractos reales de</span>
+    <span class="chip">Erste · XLSX + facturas PDF</span>
+    <span class="chip">Santander · XLSX</span>
+    <span class="t" style="margin-left:auto">Más brokers en camino</span>
+  </div>
+</div>
+
+<section id="features" class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">Qué hace por vos</span>
+    <h2>Del desorden de los extractos a decisiones con fundamento.</h2>
+    <p>No es otra planilla. Es un motor de cartera que entiende compras, ventas, comisiones e impuestos como lo haría un contador.</p>
+  </div>
+  <div class="features">
+    <div class="feature reveal"><div class="n">01</div><h3>Ingesta multi-broker</h3><p>Subís el archivo tal cual te lo da el broker. Normalizamos formatos, monedas y números localizados, y descartamos duplicados automáticamente.</p></div>
+    <div class="feature reveal"><div class="n">02</div><h3>Costo real, no aproximado</h3><p>Base de costo FIFO o promedio, seleccionable por tipo de activo. P&L realizado y no realizado con comisiones capitalizadas y precisión decimal.</p></div>
+    <div class="feature reveal"><div class="n">03</div><h3>Retornos y riesgo</h3><p>Rendimiento ponderado por tiempo (TWR) y por dinero (TIR/MWR), CAGR, drawdown máximo y volatilidad. La diferencia entre "subió" y "te fue bien".</p></div>
+    <div class="feature reveal"><div class="n">04</div><h3>Tus datos, tuyos</h3><p>Aislamiento por usuario a nivel de base de datos: cada consulta queda limitada a tus filas. No mostramos publicidad ni vendemos tus datos.</p></div>
+  </div>
+</section>
+
+<section id="how" class="steps-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Cómo funciona</span>
+      <h2>Tres pasos, cinco minutos.</h2>
+      <p>Diseñado para que la primera vez ya veas algo útil.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="s">Paso 01</div><h3>Subí tu extracto</h3><p>Arrastrá el XLSX o el PDF de tu broker. Lo leemos y validamos antes de guardar nada.</p></div>
+      <div class="step reveal"><div class="s">Paso 02</div><h3>Lo ponemos en orden</h3><p>Reconstruimos posiciones, costo y P&L, y traemos precios de mercado para valuar a hoy.</p></div>
+      <div class="step reveal"><div class="s">Paso 03</div><h3>Mirás tu cartera</h3><p>Holdings, asignación, rendimiento y riesgo en un panel claro. Exportás cuando quieras.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">Planes</span>
+    <h2>Empezá gratis. Subí cuando lo necesites.</h2>
+    <p>Sin contratos. Cancelás en cualquier momento desde el portal de facturación.</p>
+  </div>
+  <div class="plans">
+    <div class="plan reveal">
+      <h3>Free</h3>
+      <div class="price">€0</div>
+      <ul><li>1 portfolio</li><li>Hasta 100 operaciones</li><li>Holdings y valuación</li><li>Exportación CSV</li></ul>
+      <a class="btn btn-ghost" href="APP_URL">Empezar</a>
+    </div>
+    <div class="plan feat reveal">
+      <h3>Pro</h3>
+      <div class="price">€9 <small>/ mes</small></div>
+      <ul><li>Hasta 5 portfolios</li><li>Operaciones ilimitadas</li><li>Precios de mercado en vivo</li><li>Rendimiento y riesgo</li><li>Reporte multi-moneda</li></ul>
+      <a class="btn btn-primary" href="APP_URL">Probar Pro</a>
+    </div>
+    <div class="plan reveal">
+      <h3>Premium</h3>
+      <div class="price">€19 <small>/ mes</small></div>
+      <ul><li>Portfolios ilimitados</li><li>Todo lo de Pro</li><li>Soporte prioritario</li></ul>
+      <a class="btn btn-ghost" href="APP_URL">Elegir Premium</a>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Dejá de adivinar cómo va tu cartera.</h2>
+    <p>Subí tu primer extracto hoy y mirá tu portfolio en claro en cinco minutos.</p>
+    <a class="btn btn-primary" href="APP_URL">Crear cuenta gratis</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Clarity · Hecho para quien invierte de verdad.</span>
+    <span class="mono">No es asesoramiento financiero.</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  if (matchMedia('(prefers-reduced-motion: no-preference)').matches){
+    const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.16});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
